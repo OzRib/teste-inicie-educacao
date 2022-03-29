@@ -1,0 +1,32 @@
+{
+  "name": "teste-inicie-educacao",
+  "version": "1.0.0",
+  "description": "Teste de processo seletivo para a instituição Inicie Educação",
+  "main": "src/index.js",
+  "author": "OzRib",
+  "license": "MIT",
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "jest": "^27.5.1",
+    "next": "^12.1.2",
+    "nodemon": "^2.0.15",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/jest": "^27.4.1",
+    "@types/node": "^17.0.23"
+  },
+  "imports": {
+    "#env": "./src/config/envNames.js",
+    "#app": "./src/app.js"
+  }
+}

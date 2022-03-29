@@ -1,0 +1,14 @@
+#!/bin/bash
+
+FILENAME=$0
+FILE_DIRNAME=$(dirname $FILENAME)
+WORKDIR=$(dirname $FILE_DIRNAME)
+
+# checks if docker-compose is installed
+if ! [ -x "$(command -v docker-compose)" ]
+then
+  echo '[error] docker-compose is not installed.'
+  exit 1
+fi
+
+docker-compose -f $WORKDIR/docker-compose.dev.yml up
