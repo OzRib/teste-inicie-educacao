@@ -8,7 +8,8 @@
   "private": false,
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register src/index.ts",
-    "start": "ts-node -r tsconfig-paths/register src/index.ts"
+    "start": "ts-node -r tsconfig-paths/register src/index.ts",
+    "test": "jest"
   },
   "dependencies": {
     "@emotion/react": "^11.8.2",
@@ -24,6 +25,7 @@
     "nodemon": "^2.0.15",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "supertest": "^6.2.2",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
     "tsconfig-paths": "^3.14.1",
