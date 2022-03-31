@@ -3,9 +3,10 @@ import 'dotenv/config';
 const env = process.env;
 
 const envNames = {
-  port: env.PORT || 3000,
+  port: parseInt(env.PORT || '80'),
   hostname: env.HOSTNAME || 'localhost',
-  script: env.npm_lifecycle_event
+  script: env.npm_lifecycle_event,
+  authorizationToken: env.AUTHORIZATION_TOKEN || null
 }
 
 export default envNames;

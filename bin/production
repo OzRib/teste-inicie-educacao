@@ -7,7 +7,7 @@ WORKDIR=$(dirname $FILE_DIRNAME)
 # checks if docker-compose is installed
 if ! [ -x "$(command -v docker-compose)" ]
 then
-  echo 'Error: docker-compose is not installed.'
+  echo '[error] docker-compose is not installed.'
   exit 1
 fi
 

@@ -5,6 +5,7 @@ services:
     ports:
       - 80:80
     build: ./
+    env_file: ./.env.production
     command: yarn start
     expose:
       - 80
