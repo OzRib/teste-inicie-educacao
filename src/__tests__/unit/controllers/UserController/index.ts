@@ -1,7 +1,9 @@
-import UserController from '@controllers/UserController'
+import UserController from '@controllers/UserController';
+import type { RegisterUser } from '@controllers/UserController';
+import serverApi from '@services/serverApi';
 
 jest.mock('@services/serverApi', () => ({
-  get(url: string) {
+  get: jest.fn((url: string) => {
     if (url === '/users')
       return {
         data: [
@@ -24,33 +26,30 @@ jest.mock('@services/serverApi', () => ({
           status: 'active'
         }
       }
-  },
-  post(url: string, user: any) {
+  }),
+  post: jest.fn((url: string, user: any) => {
     if (url === '/users')
       return {
         data: {
-          id: 2,
+          id: 1,
           ...user
         }
       };
-  }
+  })
 }))
 
 describe('UserController test', () => {
   it('create new user', async () => {
-    const user = await UserController.create({
+    const user: RegisterUser = {
       gender: 'male',
       email: 'foo@bar.com',
       name: 'foo bar',
       status: 'active'
-    });
+    };
+    const newUser = await UserController.create(user);
 
-    expect(user).toMatchObject({
-      gender: 'male',
-      email: 'foo@bar.com',
-      name: 'foo bar',
-      status: 'active'
-    });
+    expect(newUser).toMatchObject(user);
+    expect(serverApi.post).toHaveBeenCalledWith('/users', user);
   });
 
   it('get one user', async () => {
@@ -62,7 +61,8 @@ describe('UserController test', () => {
       name: 'foo bar',
       email: 'foo@bar.com',
       status: 'active'
-    })
+    });
+    expect(serverApi.get).toHaveBeenCalledWith('/users/1');
   })
 
   it('get all users', async () => {
@@ -76,6 +76,7 @@ describe('UserController test', () => {
         email: 'foo@bar.com',
         status: 'active'
       }
-    ])
+    ]);
+    expect(serverApi.get).toHaveBeenCalledWith('/users');
   });
 })
