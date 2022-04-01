@@ -1,15 +1,16 @@
 import express from 'express';
 import request from 'supertest';
-import UserRoutes from '@controllers/UserController/routes'
+import UserRoutes from '@controllers/UserController/routes';
+import UserController from '@controllers/UserController';
 import * as bodyParser from 'body-parser';
 
 jest.mock('@controllers/UserController', () => ({
-  create: (user: any) => ({
+  create: jest.fn((user: any) => ({
     id: 1,
     ...user
-  }),
-  getAll: () => ([]),
-  getOne(userId: number) {
+  })),
+  getAll: jest.fn(() => ([])),
+  getOne: jest.fn((userId: number) => {
     if (userId === 1)
       return {
         id: 1,
@@ -21,10 +22,10 @@ jest.mock('@controllers/UserController', () => ({
     const error: any = new Error('not found');
     error.statusCode = 404;
     throw error;
-  }
+  })
 }))
 
-describe('UserController integration', () => {
+describe('UserController routes test', () => {
   const app = express();
   app.use(bodyParser.json());
   app.use('/users', UserRoutes);
@@ -34,6 +35,7 @@ describe('UserController integration', () => {
 
     expect(users).toBeInstanceOf(Array);
     expect(statusCode).toEqual(200);
+    expect(UserController.getAll).toHaveBeenCalled();
   });
 
   it('get one user', async () => {
@@ -47,6 +49,7 @@ describe('UserController integration', () => {
       status: 'active'
     });
     expect(statusCode).toEqual(200);
+    expect(UserController.getOne).toHaveBeenCalledWith(1);
   });
 
   it('create user', async () => {
@@ -63,5 +66,6 @@ describe('UserController integration', () => {
       ...user
     });
     expect(statusCode).toEqual(200);
+    expect(UserController.create).toHaveBeenCalledWith(user);
   });
 });
