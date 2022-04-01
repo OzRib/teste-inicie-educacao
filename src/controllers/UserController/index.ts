@@ -1,10 +1,15 @@
 import serverApi from '@services/serverApi';
 
-interface User {
+export interface User {
+  id: number
   email: string
   name: string,
   gender: 'male' | 'female',
   status: 'active' | 'nactive'
+}
+
+export type RegisterUser = {
+  [key in keyof User as Exclude<key, 'id'>]: User[key]
 }
 
 export default class UserController {
@@ -20,7 +25,7 @@ export default class UserController {
     return user
   }
 
-  static async create(user: User): Promise<User> {
+  static async create(user: RegisterUser): Promise<User> {
     const { data: newUser } = await serverApi.post<User>('/users', user);
 
     return newUser;
