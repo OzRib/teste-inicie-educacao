@@ -12,7 +12,9 @@
       "@app": ["app"],
       "@controllers/*": ["controllers/*"],
       "@routes": ["routes"],
-      "@services/*": ["services/*"]
+      "@services/*": ["services/*"],
+      "@providers/*": ["providers/*"],
+      "@roadmap/*": ["roadmap/*"]
     },
     "allowJs": true,
     "skipLibCheck": true,
