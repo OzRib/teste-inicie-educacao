@@ -1,9 +1,10 @@
 import React from 'react';
+import RoadmapProvider from '@providers/roadmap';
 
 export default function App({ Component, pageProps }) {
   return (
-    <React.Fragment>
+    <RoadmapProvider>
       <Component {...pageProps} />
-    </React.Fragment>
+    </RoadmapProvider>
   )
 }
