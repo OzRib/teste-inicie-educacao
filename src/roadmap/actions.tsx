@@ -1,5 +1,5 @@
 import React from "react";
-import type { ReactNode } from 'react';
+import type { ReactNode, ReactElement } from 'react';
 
 const actions = {
   presentation1: () => ({
@@ -35,7 +35,8 @@ const actions = {
 export interface ActionResponse {
   message: ReactNode
   payload: any
-  helper: ReactNode
+  helper: ReactElement<any, any> | null
+  showInfo?: boolean
 }
 
 export interface Action {
