@@ -30,4 +30,8 @@ export default class UserController {
 
     return newUser;
   }
+
+  static async delete(id: number): Promise<void> {
+    await goRestApi.delete(`/users/${id}`);
+  }
 } 
