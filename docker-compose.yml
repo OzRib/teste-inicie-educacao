@@ -6,7 +6,9 @@ services:
       - 80:80
     build: ./
     env_file: ./.env.production
-    command: yarn start
+    command: >
+      sh -c "yarn build
+      && yarn start"
     expose:
       - 80
     environment:
