@@ -25,6 +25,13 @@ export default class UserController {
     return user
   }
 
+  static async getAllByEmail(email: string): Promise<User[]> {
+    const encodedEmail = encodeURIComponent(email);
+    const { data: users } = await goRestApi.get<User[]>(`/users?email=${encodedEmail}`);
+
+    return users;
+  }
+
   static async create(user: RegisterUser): Promise<User> {
     const { data: newUser } = await goRestApi.post<User>('/users', user);
 
