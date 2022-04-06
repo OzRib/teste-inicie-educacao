@@ -7,7 +7,7 @@ import type { ReactNode } from 'react';
 
 interface RoadmapContextType {
   roadmap: Roadmap
-  nextStep: (callbackTimeout: number) => boolean
+  nextStep: (callbackTimeout: number) => Promise<boolean> | boolean
 }
 
 interface RoadmapProviderProps {
@@ -22,7 +22,7 @@ export const RoadmapContext = React.createContext<RoadmapContextType>({
 export default function RoadmapProvider({ children }: RoadmapProviderProps) {
   const [roadmap, setRoadmap] = React.useState(createInitialRoadmap());
 
-  function nextStep(callbackTimeout: number): boolean {
+  async function nextStep(callbackTimeout: number): Promise<boolean> {
     const { stepIndex, stepData } = roadmap;
     const { payload } = stepData;
     const nextStepIndex = stepIndex + 1;
@@ -33,7 +33,7 @@ export default function RoadmapProvider({ children }: RoadmapProviderProps) {
 
     const nextStepAction: Action = actions[nextStepName];
     
-    const nextStepData = nextStepAction(payload);
+    const nextStepData = await nextStepAction(payload);
     setTimeout(() => setRoadmap({
       stepName: nextStepName,
       stepIndex: nextStepIndex,
