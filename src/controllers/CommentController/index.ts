@@ -19,6 +19,12 @@ export default class CommentController {
     return comments;
   }
 
+  static async getAllByPost(postId: number): Promise<Comment[]> {
+    const { data: comments } = await goRestApi.get<Comment[]>(`/comments?post_id=${postId}`);
+
+    return comments;
+  }
+
   static async getOne(commentId: number): Promise<Comment> {
     const { data: comment } = await goRestApi.get<Comment>(`/comments/${commentId}`);
 
