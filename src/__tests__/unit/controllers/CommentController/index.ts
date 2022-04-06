@@ -2,7 +2,7 @@ import CommentController from '@controllers/CommentController';
 import goRestApi from '@services/goRestApi';
 
 jest.mock('@services/goRestApi', () => ({
-  get: jest.fn((url: string) => {
+  get: jest.fn(async (url: string) => {
     if (url === '/comments/1')
       return {
         data: {
@@ -14,7 +14,7 @@ jest.mock('@services/goRestApi', () => ({
         }
       }
   }),
-  post: jest.fn((url: string, comment: any) => {
+  post: jest.fn(async (url: string, comment: any) => {
     if (url === '/comments')
       return {
         data: {
@@ -23,7 +23,7 @@ jest.mock('@services/goRestApi', () => ({
         }
       }
   }),
-  delete: jest.fn()
+  delete: jest.fn(async () => {})
 }));
 
 describe('CommentController unit test', () => {

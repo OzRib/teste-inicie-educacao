@@ -5,7 +5,7 @@ import CommentController from '@controllers/CommentController';
 import * as bodyParser from 'body-parser';
 
 jest.mock('@controllers/CommentController', () => ({
-  getOne: jest.fn((commentId: number) => {
+  getOne: jest.fn(async (commentId: number) => {
     if (commentId === 1)
       return {
         id: 1,
@@ -15,11 +15,11 @@ jest.mock('@controllers/CommentController', () => ({
         body: 'bar'
       }
   }),
-  create: jest.fn((comment: any) => ({
+  create: jest.fn(async (comment: any) => ({
     id: 1,
     ...comment
   })),
-  delete: jest.fn()
+  delete: jest.fn(async () => { })
 }));
 
 describe('CommentController routes unit test', () => {

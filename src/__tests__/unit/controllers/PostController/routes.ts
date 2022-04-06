@@ -5,12 +5,12 @@ import * as bodyParser from 'body-parser';
 import PostController from '@controllers/PostController';
 
 jest.mock('@controllers/PostController', () => ({
-  create: jest.fn((post: any) => ({
+  create: jest.fn(async (post: any) => ({
     id: 1,
     user_id: 1,
     ...post
   })),
-  getOne: jest.fn((id: number) => {
+  getOne: jest.fn(async (id: number) => {
     if (id === 1)
       return {
         id: 1,
@@ -19,7 +19,7 @@ jest.mock('@controllers/PostController', () => ({
         body: 'bar'
       };
   }),
-  getAll: jest.fn(() => ([]))
+  getAll: jest.fn(async  () => ([]))
 }));
 
 describe('PostController routes test', () => {
