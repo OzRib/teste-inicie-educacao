@@ -5,12 +5,13 @@ import {
   Grid,
   Typography,
   Fade,
+  Box,
   Button
 } from '@mui/material';
 import { useRoadmap } from '@providers/roadmap';
 import type { NextPage } from 'next';
 
-const RootDiv = styled('div')({
+const RootBox = styled(Box)({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'flex-start'
@@ -50,7 +51,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Home</title>
       </Head>
-      <RootDiv>
+      <RootBox>
         <Grid container spacing={2}>
           <Grid
             item
@@ -98,4 +99,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default Home;
