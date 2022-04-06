@@ -5,6 +5,20 @@ const router = Router();
 
 router.get('/', async (request: Request, response: Response, next: NextFunction) => {
   try {
+    const email = request.query.email;
+
+    if (email instanceof Array) {
+      const error: any = new Error('Email must be a string');
+      error.statusCode = 400;
+      throw error;
+    }
+
+    if (typeof email === 'string') {
+      const users = await UserController.getAllByEmail(email);
+
+      return response.json(users);
+    }
+
     const users = await UserController.getAll();
 
     return response.json(users);
