@@ -23,13 +23,13 @@ const Home: NextPage = () => {
   const animationDuration = 700;
   let endAnimation = false;
 
-  function handleButtonClick() {
+  async function handleButtonClick() {
     if (endAnimation === false)
       return
 
     endAnimation = false;
     setShowMessage(false);
-    const haveStepAfter = nextStep(animationDuration);
+    const haveStepAfter = await nextStep(animationDuration);
     setButtonActive(haveStepAfter);
 
     setTimeout(() => {
