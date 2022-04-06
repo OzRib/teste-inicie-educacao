@@ -21,7 +21,7 @@ const Home: NextPage = () => {
   const { roadmap, nextStep } = useRoadmap();
   const [showMessage, setShowMessage] = React.useState(true);
   const [buttonActive, setButtonActive] = React.useState(true);
-  const animationDuration = 700;
+  const animationDuration = 500;
   let endAnimation = false;
 
   async function handleButtonClick() {
