@@ -3,6 +3,23 @@ import CommentController from '@controllers/CommentController';
 
 const router = Router();
 
+router.get('/', async (request: Request, response: Response, next: NextFunction) => {
+  try {
+    const postId = parseInt(request.query.postId as string);
+    if (isNaN(postId)) {
+      const comments = await CommentController.getAll();
+
+      return response.json(comments);
+    }
+
+    const comments = await CommentController.getAllByPost(postId);
+
+    return response.json(comments);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get('/:commentId', async (request: Request, response: Response, next: NextFunction) => {
   try {
     const commentId = parseInt(request.params.commentId);
