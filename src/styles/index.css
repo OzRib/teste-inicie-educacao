@@ -1,0 +1,17 @@
+@keyframes blink-animation {
+  0% {
+    opacity: 1;
+  }
+  20% {
+    opacity: .5;
+  }
+  40% {
+    opacity: 1;
+  }
+  60% {
+    opacity: .5;
+  }
+  80% {
+    opacity: 1;
+  }
+}
