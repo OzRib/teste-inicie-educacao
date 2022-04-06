@@ -5,6 +5,7 @@ import {
   Grid,
   Typography,
   Fade,
+  Link,
   Box,
   Button
 } from '@mui/material';
@@ -55,7 +56,7 @@ const Home: NextPage = () => {
         <Grid container spacing={2}>
           <Grid
             item
-            xs={12}
+            xs={roadmap.stepData.helper ? 8 : 12}
             style={{
               height: '40vh',
               display: 'flex',
@@ -74,27 +75,69 @@ const Home: NextPage = () => {
           </Grid>
           <Grid
             item
-            xs={12}
-            style={{
-              display: 'flex',
-              justifyContent: 'center'
-            }}
+            xs={roadmap.stepData.helper ? 4 : false}
           >
             <Fade
-              in={buttonActive}
+              in={Boolean(roadmap.stepData.helper)}
               timeout={animationDuration}
             >
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleButtonClick}
+              <Box
+                sx={{
+                  display: roadmap.stepData.helper ? 'inherit' : 'none',
+                  height: '90vh',
+                  overflow: 'auto'
+                }}
               >
-                Continuar
-              </Button>
+                {roadmap.stepData.helper}
+              </Box>
             </Fade>
           </Grid>
         </Grid>
-      </RootDiv>
+        <Box
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            position: 'absolute',
+            top: '60%'
+          }}
+        >
+          <Fade
+            in={buttonActive}
+            timeout={animationDuration}
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              style={{
+                marginBottom: 16
+              }}
+              onClick={handleButtonClick}
+            >
+              Continuar
+            </Button>
+          </Fade>
+          <Fade
+            timeout={animationDuration}
+            in={Boolean(roadmap.stepData.showInfo)}
+          >
+            <Box
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+              }}
+            >
+              <Link href="https://github.com/OzRib/teste-inicie-educacao" target="_blank">
+                Github do projeto
+              </Link>
+              <Link href="https://gorest.co.in" target="_blank">
+                Api GoRest
+              </Link>
+            </Box>
+          </Fade>
+        </Box>
+      </RootBox>
     </React.Fragment>
   )
 }
