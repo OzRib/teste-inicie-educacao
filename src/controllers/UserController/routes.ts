@@ -42,4 +42,22 @@ router.get('/:userId', async (request: Request, response: Response, next: NextFu
   }
 });
 
+router.delete('/:userId', async (request: Request, response: Response, next: NextFunction) => {
+  try {
+    const userId = parseInt(request.params.userId);
+
+    if (isNaN(userId)) {
+      const error: any = new Error('User id must be a number');
+      error.statusCode = 400;
+      throw error;
+    }
+
+    await UserController.delete(userId);
+
+    return response.send('deleted');
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;
