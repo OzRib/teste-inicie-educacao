@@ -1,6 +1,6 @@
-import serverApi from '@services/serverApi';
+import goRestApi from '@services/goRestApi';
 
-interface Comment {
+export interface Comment {
   id: number
   post_id: number
   name: string
@@ -14,18 +14,18 @@ type RegisterComment = {
 
 export default class CommentController {
   static async getOne(commentId: number): Promise<Comment> {
-    const { data: comment } = await serverApi.get<Comment>(`/comments/${commentId}`);
+    const { data: comment } = await goRestApi.get<Comment>(`/comments/${commentId}`);
 
     return comment;
   }
 
   static async create(comment: RegisterComment): Promise<Comment> {
-    const { data: newComment } = await serverApi.post<Comment>('/comments', comment);
+    const { data: newComment } = await goRestApi.post<Comment>('/comments', comment);
 
     return newComment;
   }
 
   static async delete(commentId: number): Promise<void> {
-    await serverApi.delete(`/comments/${commentId}`);
+    await goRestApi.delete(`/comments/${commentId}`);
   }
 }

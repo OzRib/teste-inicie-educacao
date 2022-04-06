@@ -1,7 +1,7 @@
 import PostController from "@controllers/PostController";
-import serverApi from '@services/serverApi';
+import goRestApi from '@services/goRestApi';
 
-jest.mock('@services/serverApi', () => ({
+jest.mock('@services/goRestApi', () => ({
   post: jest.fn((url: string, post: any) => {
     if (url === '/posts')
       return {
@@ -43,7 +43,7 @@ describe('PostController test', () => {
       id: 1,
       user_id: 1
     });
-    expect(serverApi.post).toHaveBeenCalledWith('/posts', post);
+    expect(goRestApi.post).toHaveBeenCalledWith('/posts', post)
   });
 
   it('get one post', async () => {
@@ -55,13 +55,13 @@ describe('PostController test', () => {
       title: 'foo',
       body: 'bar'
     });
-    expect(serverApi.get).toHaveBeenCalledWith('/posts/1');
+    expect(goRestApi.get).toHaveBeenCalledWith('/posts/1');
   });
 
   it('get all posts', async () => {
     const posts = await PostController.getAll();
 
     expect(posts).toBeInstanceOf(Array);
-    expect(serverApi.get).toHaveBeenCalledWith('/posts');
+    expect(goRestApi.get).toHaveBeenCalledWith('/posts');
   });
 });

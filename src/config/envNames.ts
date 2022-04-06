@@ -6,7 +6,7 @@ const envNames = {
   port: parseInt(env.PORT || '80'),
   hostname: env.HOSTNAME || 'localhost',
   script: env.npm_lifecycle_event,
-  authorizationToken: env.AUTHORIZATION_TOKEN || null
+  goRestAuthorizationToken: env.GO_REST_AUTHORIZATION_TOKEN || null
 }
 
 export default envNames;

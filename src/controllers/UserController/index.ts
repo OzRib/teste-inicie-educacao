@@ -1,11 +1,11 @@
-import serverApi from '@services/serverApi';
+import goRestApi from '@services/goRestApi';
 
 export interface User {
   id: number
   email: string
   name: string,
   gender: 'male' | 'female',
-  status: 'active' | 'nactive'
+  status: 'active' | 'inactive'
 }
 
 export type RegisterUser = {
@@ -14,19 +14,19 @@ export type RegisterUser = {
 
 export default class UserController {
   static async getAll(): Promise<User[]> {
-    const { data: users } = await serverApi.get<User[]>('/users');
+    const { data: users } = await goRestApi.get<User[]>('/users');
 
     return users;
   }
 
   static async getOne(id: number): Promise<User> {
-    const { data: user } = await serverApi.get<User>(`/users/${id}`);
+    const { data: user } = await goRestApi.get<User>(`/users/${id}`);
 
     return user
   }
 
   static async create(user: RegisterUser): Promise<User> {
-    const { data: newUser } = await serverApi.post<User>('/users', user);
+    const { data: newUser } = await goRestApi.post<User>('/users', user);
 
     return newUser;
   }

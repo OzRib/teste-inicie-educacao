@@ -1,7 +1,7 @@
 import axios from 'axios';
 import envNames from '@env';
 
-const token = envNames.authorizationToken
+const token = envNames.goRestAuthorizationToken;
 
 const api = axios.create({
   baseURL: 'https://gorest.co.in/public/v2',

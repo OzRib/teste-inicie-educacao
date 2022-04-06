@@ -1,6 +1,6 @@
-import serverApi from '@services/serverApi'
+import goRestApi from '@services/goRestApi'
 
-interface Post {
+export interface Post {
   id: number
   user_id: number
   title: string
@@ -13,19 +13,19 @@ type RegisterPost = {
 
 export default class PostController {
   static async create(post: RegisterPost): Promise<Post> {
-    const { data: newPost } = await serverApi.post<Post>('/posts', post);
+    const { data: newPost } = await goRestApi.post<Post>('/posts', post);
 
     return newPost;
   }
 
   static async getOne(id: number): Promise<Post> {
-    const { data: post } = await serverApi.get<Post>(`/posts/${id}`);
+    const { data: post } = await goRestApi.get<Post>(`/posts/${id}`);
 
     return post;
   }
 
   static async getAll(): Promise<Post[]> {
-    const { data: posts } = await serverApi.get<Post[]>('/posts');
+    const { data: posts } = await goRestApi.get<Post[]>('/posts');
 
     return posts;
   }

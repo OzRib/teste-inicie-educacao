@@ -1,7 +1,7 @@
 import CommentController from '@controllers/CommentController';
-import serverApi from '@services/serverApi';
+import goRestApi from '@services/goRestApi';
 
-jest.mock('@services/serverApi', () => ({
+jest.mock('@services/goRestApi', () => ({
   get: jest.fn((url: string) => {
     if (url === '/comments/1')
       return {
@@ -37,7 +37,7 @@ describe('CommentController unit test', () => {
       email: 'foo@bar.com',
       body: 'bar'
     });
-    expect(serverApi.get).toHaveBeenCalledWith('/comments/1')
+    expect(goRestApi.get).toHaveBeenCalledWith('/comments/1')
   });
 
   it('create comment', async () => {
@@ -53,11 +53,11 @@ describe('CommentController unit test', () => {
       id: 1,
       ...comment
     });
-    expect(serverApi.post).toHaveBeenCalledWith('/comments', comment);
+    expect(goRestApi.post).toHaveBeenCalledWith('/comments', comment);
   });
 
   it('delete comment', async () => {
     await CommentController.delete(1);
-    expect(serverApi.delete).toHaveBeenCalledWith('/comments/1');
+    expect(goRestApi.delete).toHaveBeenCalledWith('/comments/1');
   });
 });

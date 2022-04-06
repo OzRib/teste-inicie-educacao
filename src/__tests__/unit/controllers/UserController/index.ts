@@ -1,8 +1,8 @@
 import UserController from '@controllers/UserController';
 import type { RegisterUser } from '@controllers/UserController';
-import serverApi from '@services/serverApi';
+import goRestApi from '@services/goRestApi';
 
-jest.mock('@services/serverApi', () => ({
+jest.mock('@services/goRestApi', () => ({
   get: jest.fn((url: string) => {
     if (url === '/users')
       return {
@@ -49,7 +49,7 @@ describe('UserController test', () => {
     const newUser = await UserController.create(user);
 
     expect(newUser).toMatchObject(user);
-    expect(serverApi.post).toHaveBeenCalledWith('/users', user);
+    expect(goRestApi.post).toHaveBeenCalledWith('/users', user);
   });
 
   it('get one user', async () => {
@@ -62,7 +62,7 @@ describe('UserController test', () => {
       email: 'foo@bar.com',
       status: 'active'
     });
-    expect(serverApi.get).toHaveBeenCalledWith('/users/1');
+    expect(goRestApi.get).toHaveBeenCalledWith('/users/1');
   })
 
   it('get all users', async () => {
@@ -77,6 +77,6 @@ describe('UserController test', () => {
         status: 'active'
       }
     ]);
-    expect(serverApi.get).toHaveBeenCalledWith('/users');
+    expect(goRestApi.get).toHaveBeenCalledWith('/users');
   });
 })
