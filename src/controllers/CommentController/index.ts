@@ -13,6 +13,12 @@ type RegisterComment = {
 }
 
 export default class CommentController {
+  static async getAll(): Promise<Comment[]> {
+    const { data: comments } = await goRestApi.get<Comment[]>('/comments');
+
+    return comments;
+  }
+
   static async getOne(commentId: number): Promise<Comment> {
     const { data: comment } = await goRestApi.get<Comment>(`/comments/${commentId}`);
 
