@@ -68,7 +68,7 @@ const Home: NextPage = () => {
               timeout={animationDuration}
               in={showMessage}
             >
-              <Typography align="center" variant="h5" color="primary">
+              <Typography align="center" variant="h6" color="primary">
                 {roadmap.stepData.message}
               </Typography>
             </Fade>
