@@ -9,12 +9,27 @@ export interface UserPayload {
 
 const userActions = {
   createNewUser: async () => {
-    const { data: user } = await clientApi.post<User>('/users', {
-      email: 'joaozinho@gmail.com',
-      gender: 'male',
-      name: 'Joãozinho',
-      status: 'active'
-    });
+    async function createUser(): Promise<User> {
+      const userToCreate = {
+        email: 'joaozinho@gmail.com',
+        gender: 'male',
+        name: 'Joãozinho',
+        status: 'active'
+      };
+      try {
+        const { data: user } = await clientApi.post<User>('/users', userToCreate);
+
+        return user;
+      } catch (error) {
+        const { data: [userWithEmail] } = await clientApi.get<User[]>(`/users?email=${userToCreate.email}`);
+        await clientApi.delete(`/users/${userWithEmail.id}`);
+        const { data: user } = await clientApi.post('/users', userToCreate);
+
+        return user;
+      }
+    }
+
+    const user = await createUser();
 
     return {
       message: (
