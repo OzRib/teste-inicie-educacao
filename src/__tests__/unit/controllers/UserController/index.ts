@@ -97,4 +97,10 @@ describe('UserController test', () => {
     ]);
     expect(goRestApi.get).toHaveBeenCalledWith(`/users?email=${encodedEmail}`);
   })
+
+  it('delete user', async () => {
+    await UserController.delete(1);
+
+    expect(goRestApi.delete).toHaveBeenCalledWith('/users/1');
+  });
 })
