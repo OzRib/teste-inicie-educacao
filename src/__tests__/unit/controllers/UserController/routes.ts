@@ -5,12 +5,12 @@ import UserController from '@controllers/UserController';
 import * as bodyParser from 'body-parser';
 
 jest.mock('@controllers/UserController', () => ({
-  create: jest.fn((user: any) => ({
+  create: jest.fn(async (user: any) => ({
     id: 1,
     ...user
   })),
-  getAll: jest.fn(() => ([])),
-  getOne: jest.fn((userId: number) => {
+  getAll: jest.fn(async () => ([])),
+  getOne: jest.fn(async (userId: number) => {
     if (userId === 1)
       return {
         id: 1,
@@ -22,7 +22,9 @@ jest.mock('@controllers/UserController', () => ({
     const error: any = new Error('not found');
     error.statusCode = 404;
     throw error;
-  })
+  }),
+  getAllByEmail: jest.fn(async () => ([])),
+  delete: jest.fn(async () => { })
 }))
 
 describe('UserController routes test', () => {
