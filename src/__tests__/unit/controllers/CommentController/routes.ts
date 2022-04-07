@@ -83,6 +83,13 @@ describe('CommentController routes unit test', () => {
     expect(CommentController.getAllByPost).toHaveBeenCalledWith(1);
   });
 
+  it('delete comment with non number id', async () => {
+    const { statusCode } = await request(app).delete('/comments/foo');
+
+    expect(statusCode).toEqual(400);
+    expect(CommentController.delete).not.toHaveBeenCalled();
+  });
+
   it('delete comment', async () => {
     const { statusCode } = await request(app).delete('/comments/1');
 
