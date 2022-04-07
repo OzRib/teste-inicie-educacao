@@ -40,6 +40,17 @@ describe('UserController routes test', () => {
     expect(UserController.getAll).toHaveBeenCalled();
   });
 
+  it('get all users by email', async () => {
+    const email = 'foo@bar.com';
+    const encodedEmail = encodeURIComponent(email);
+
+    const { body: users, statusCode } = await request(app).get(`/users?email=${encodedEmail}`);
+
+    expect(users).toBeInstanceOf(Array);
+    expect(statusCode).toEqual(200);
+    expect(UserController.getAllByEmail).toHaveBeenCalledWith(email);
+  });
+
   it('get one user', async () => {
     const { body: user, statusCode } = await request(app).get('/users/1');
 
