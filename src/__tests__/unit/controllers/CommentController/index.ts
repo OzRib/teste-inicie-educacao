@@ -3,7 +3,7 @@ import goRestApi from '@services/goRestApi';
 
 jest.mock('@services/goRestApi', () => ({
   get: jest.fn(async (url: string) => {
-    if (url === '/comments/1')
+    if (url.indexOf('/comments/') === 0)
       return {
         data: {
           id: 1,
@@ -12,6 +12,10 @@ jest.mock('@services/goRestApi', () => ({
           email: 'foo@bar.com',
           body: 'bar'
         }
+      }
+    if (url.indexOf('/comments') === 0)
+      return {
+        data: []
       }
   }),
   post: jest.fn(async (url: string, comment: any) => {
@@ -23,7 +27,7 @@ jest.mock('@services/goRestApi', () => ({
         }
       }
   }),
-  delete: jest.fn(async () => {})
+  delete: jest.fn(async () => { })
 }));
 
 describe('CommentController unit test', () => {
@@ -58,6 +62,7 @@ describe('CommentController unit test', () => {
 
   it('delete comment', async () => {
     await CommentController.delete(1);
+
     expect(goRestApi.delete).toHaveBeenCalledWith('/comments/1');
   });
 });
