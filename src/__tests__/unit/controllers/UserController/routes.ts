@@ -51,6 +51,13 @@ describe('UserController routes test', () => {
     expect(UserController.getAllByEmail).toHaveBeenCalledWith(email);
   });
 
+  it('get one user with non number id', async () => {
+    const { statusCode } = await request(app).get('/users/foo');
+
+    expect(statusCode).toEqual(400);
+    expect(UserController.getOne).not.toHaveBeenCalled();
+  });
+
   it('get one user', async () => {
     const { body: user, statusCode } = await request(app).get('/users/1');
 
