@@ -15,6 +15,8 @@ jest.mock('@controllers/CommentController', () => ({
         body: 'bar'
       }
   }),
+  getAll: jest.fn(async () => ([])),
+  getAllByPost: jest.fn(async () => ([])),
   create: jest.fn(async (comment: any) => ({
     id: 1,
     ...comment
@@ -26,6 +28,13 @@ describe('CommentController routes unit test', () => {
   const app = express();
   app.use(bodyParser.json());
   app.use('/comments', CommentRoutes);
+
+  it('get one comment with non number id', async () => {
+    const { statusCode } = await request(app).get('/comments/foo');
+
+    expect(statusCode).toEqual(400);
+    expect(CommentController.getOne).not.toHaveBeenCalled();
+  });
 
   it('get one comment', async () => {
     const { body: comment, statusCode } = await request(app).get('/comments/1');
@@ -49,7 +58,7 @@ describe('CommentController routes unit test', () => {
       body: 'bar'
     };
     const { body: newComment, statusCode } = await request(app).post('/comments').send(comment);
-    
+
     expect(newComment).toMatchObject({
       id: 1,
       ...comment
@@ -58,8 +67,17 @@ describe('CommentController routes unit test', () => {
     expect(CommentController.create).toHaveBeenCalledWith(comment);
   });
 
-  it('delete comment',  async () => {
+  it('get all comments', async () => {
+    const { body: comments, statusCode } = await request(app).get('/comments');
+
+    expect(comments).toBeInstanceOf(Array);
+    expect(statusCode).toEqual(200);
+    expect(CommentController.getAll).toHaveBeenCalled();
+  });
+
+  it('delete comment', async () => {
     const { statusCode } = await request(app).delete('/comments/1');
+
     expect(statusCode).toEqual(200);
     expect(CommentController.delete).toHaveBeenCalledWith(1);
   });
