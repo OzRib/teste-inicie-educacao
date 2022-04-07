@@ -67,6 +67,13 @@ describe('CommentController unit test', () => {
     expect(goRestApi.get).toHaveBeenCalledWith('/comments');
   });
 
+  it('get all comments by post', async () => {
+    const comments = await CommentController.getAllByPost(1);
+
+    expect(comments).toBeInstanceOf(Array);
+    expect(goRestApi.get).toHaveBeenCalledWith('/comments?post_id=1');
+  })
+
   it('delete comment', async () => {
     await CommentController.delete(1);
 
