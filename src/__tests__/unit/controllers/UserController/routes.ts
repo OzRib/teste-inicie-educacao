@@ -88,4 +88,11 @@ describe('UserController routes test', () => {
     expect(statusCode).toEqual(200);
     expect(UserController.create).toHaveBeenCalledWith(user);
   });
+
+  it('delete user with non number id', async () => {
+    const { statusCode } = await request(app).get('/users/foo');
+
+    expect(statusCode).toEqual(400);
+    expect(UserController.delete).not.toHaveBeenCalled();
+  });
 });
