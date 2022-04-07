@@ -34,6 +34,13 @@ describe('PostController routes test', () => {
     expect(PostController.getAll).toHaveBeenCalled();
   });
 
+  it('get one post with non number id', async () => {
+    const { statusCode } = await request(app).get('/posts/foo');
+
+    expect(statusCode).toEqual(400);
+    expect(PostController.getOne).not.toHaveBeenCalled();
+  });
+
   it('get one post', async () => {
     const { body: post } = await request(app).get('/posts/1');
 
