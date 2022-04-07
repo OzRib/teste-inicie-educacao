@@ -2,7 +2,7 @@ import PostController from "@controllers/PostController";
 import goRestApi from '@services/goRestApi';
 
 jest.mock('@services/goRestApi', () => ({
-  post: jest.fn((url: string, post: any) => {
+  post: jest.fn(async (url: string, post: any) => {
     if (url === '/posts')
       return {
         data: {
@@ -12,7 +12,7 @@ jest.mock('@services/goRestApi', () => ({
         }
       }
   }),
-  get: jest.fn((url: string) => {
+  get: jest.fn(async (url: string) => {
     if (url === '/posts/1')
       return {
         data: {
