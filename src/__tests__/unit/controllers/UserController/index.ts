@@ -80,4 +80,21 @@ describe('UserController test', () => {
     ]);
     expect(goRestApi.get).toHaveBeenCalledWith('/users');
   });
+
+  it('get all users by email', async () => {
+    const email = 'foo@bar.com';
+    const encodedEmail = encodeURIComponent(email);
+    const users = await UserController.getAllByEmail('foo@bar.com');
+
+    expect(users).toMatchObject([
+      {
+        id: 1,
+        gender: 'male',
+        email: 'foo@bar.com',
+        name: 'foo bar',
+        status: 'active'
+      }
+    ]);
+    expect(goRestApi.get).toHaveBeenCalledWith(`/users?email=${encodedEmail}`);
+  })
 })
