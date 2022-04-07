@@ -3,8 +3,18 @@ import type { RegisterUser } from '@controllers/UserController';
 import goRestApi from '@services/goRestApi';
 
 jest.mock('@services/goRestApi', () => ({
-  get: jest.fn((url: string) => {
-    if (url === '/users')
+  get: jest.fn(async (url: string) => {
+    if (url.indexOf('/users/') === 0)
+      return {
+        data: {
+          id: 1,
+          name: 'foo bar',
+          email: 'foo@bar.com',
+          gender: 'male',
+          status: 'active'
+        }
+      }
+    if (url.indexOf('/users') === 0)
       return {
         data: [
           {
@@ -16,26 +26,17 @@ jest.mock('@services/goRestApi', () => ({
           }
         ]
       }
-    if (url === '/users/1')
-      return {
-        data: {
-          id: 1,
-          name: 'foo bar',
-          email: 'foo@bar.com',
-          gender: 'male',
-          status: 'active'
-        }
-      }
   }),
-  post: jest.fn((url: string, user: any) => {
-    if (url === '/users')
+  post: jest.fn(async (url: string, user: any) => {
+    if (url.indexOf('/users') === 0)
       return {
         data: {
           id: 1,
           ...user
         }
       };
-  })
+  }),
+  delete: jest.fn(async () => { })
 }))
 
 describe('UserController test', () => {
