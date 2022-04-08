@@ -43,3 +43,44 @@ Há instruções de como instalar em seu sistema operacional em [docker.com/get-
 É recomendável a instalação do Yarn e do NodeJS para desenvolvimento. Porém se deseja apenas testar, estas instalações são desnecessárias.
 * [Instalação Yarn](https://yarnpkg.com/getting-started/install)
 * [Download NodeJS](https://nodejs.org/pt-br/download/)
+
+## Variáveis de ambiente
+Há algumas variáveis de ambiente no projeto necessárias para o mesmo executar.
+Elas podem ser definidas criando um arquivo `.env`.
+
+Os arquivos `.env` tem sua expecificação de ambiente ao inserir um ponto e o nome do ambiente em seguida.
+
+Exemplo: `.env.production`
+
+Segue a relação dos ambientes e arquivos `.env`
+* Produção: `.env.production`
+* Desenvolvimento `.env`
+
+É preciso fazer o login e criar um novo token no serviço da GoRest.
+Uma Fake API para demonstração em testes como esse.
+
+Após feito o login e gerado o token, defina-o nas variáveis de ambiente do ambiente que deseja utilizar da seguinte forma:
+
+```
+GO_REST_AUHORIZATION_TOKEN=<seu token>
+```
+
+Substitua "\<seu token\>" pelo seu token da GoRest.
+
+Esta é a única variável explicitamente necessária para o funcionamento do sistema.
+Além dela há algumas outras já preenchidas pelos containers Docker.
+
+Segue a lista:
+
+```
+PORT=<porta do serviço>
+HOSTNAME=<nome da máquina>
+```
+
+Utilize essas variáveis caso queira executar o teste sem a estrutura Docker.
+
+Há ainda uma terceira variável de ambiente definida exclusivamente pelo sistema.
+
+Ela se chama `script` e define em que script o projeto está rodando para definir se ele está em ambiente de desenvolvimento ou produção.
+
+Todas as variáveis de ambiente são centralizadas no arquivo `src/config/envNames.ts`.
