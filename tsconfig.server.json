@@ -2,12 +2,13 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "build",
+    "rootDir": ".",
     "isolatedModules": true,
     "noEmit": false,
     "noImplicitAny": false
   },
   "include": [
-    "src/**/*.ts"
+    "**/*.ts"
   ],
   "exclude": [
     "node_modules"
