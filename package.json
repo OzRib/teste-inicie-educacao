@@ -2,7 +2,6 @@
   "name": "teste-inicie-educacao",
   "version": "1.0.0",
   "description": "Teste de processo seletivo para a instituição Inicie Educação",
-  "main": "src/index.js",
   "author": "OzRib",
   "license": "MIT",
   "private": false,
