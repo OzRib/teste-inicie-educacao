@@ -21,9 +21,9 @@ const userActions = {
 
         return user;
       } catch (error) {
-        const { data: [userWithEmail] } = await clientApi.get<User[]>(`/users?email=${userToCreate.email}`);
-        const encodedEmail = encodeURIComponent(userWithEmail.email);
-        await clientApi.delete(`/users/${encodedEmail}`);
+        const encodedEmail = encodeURIComponent(userToCreate.email);
+        const { data: [userWithEmail] } = await clientApi.get<User[]>(`/users?email=${encodedEmail}`);
+        await clientApi.delete(`/users/${userWithEmail.id}`);
         const { data: user } = await clientApi.post('/users', userToCreate);
 
         return user;
