@@ -84,3 +84,57 @@ Há ainda uma terceira variável de ambiente definida exclusivamente pelo sistem
 Ela se chama `script` e define em que script o projeto está rodando para definir se ele está em ambiente de desenvolvimento ou produção.
 
 Todas as variáveis de ambiente são centralizadas no arquivo `src/config/envNames.ts`.
+
+## Como executar o projeto?
+Simples, execute o script `bin/dev` ou o script `bin/production`.
+O script cuida de realizar todo o processo para você.
+
+Caso os scripts não sejam suportados pelo seu sistema operacional, basta executar o docker-compose indicando o arquivo de docker-compose do ambiente desejado.
+
+Exemplo:
+```
+docker-compose -f docker-compose.production.yml up
+```
+
+## Scripts automaizados
+Eu elaborei scripts para facilitar o uso e desenvolvimento da estrutura do projeto.
+Estes scripts são acessíveis na pasta `bin`.
+Trata-se de um conjunto de shell scripts.
+Foram desenvolvidos para uso em Linux.
+Portanto não garanto que os mesmos rodem em outros kernels como o Windows-NT ou kernels BSD(FreeBSD e MacOS).
+
+Porém não são muito complexos.
+Fique à vontade para testá-los como achar melhor.
+O objetivo é simplesmente simplificar a execução do projeto nos ambientes certos.
+
+### Como executar um script?
+Simples, vá na pasta raíz do projeto e execute o seguinte comando para executar um script:
+```
+bin/<script>
+```
+Substituindo "\<script\>" pelo nome do script desejado.
+
+### Lista de scripts
+Há no total 3 scripts na pasta `bin`:
+* `dev`
+* `production`
+* `test`
+
+Os scripts `dev` e `production` servem para executar a aplicação em si. Enquanto o script `test` apenas para executar um ambiente de testes.
+Este último é totalmente substituível pela execução do comando `yarn test`, portanto até desnecessário.
+
+#### `bin/dev`
+Este script executa o projeto no modo de desenvolvimento, com o NextJS usando hot reload e o nodemon reiniciando a aplicação ao modificar um arquivo com uma das extensões monitoradas.
+Altamente recomendado para o desenvolvimento pois o mesmo conta com tecnologias de hot reload e reinicialização da aplicação.
+Ele não é recomendado se você quer uma experiência mais performática visto que o mesmo não carrega os módulos da maneira mais eficiente.
+Isso se deve a ele sempre levar em consideração a possibilidade de uma nova modificação a qualquer momento.
+
+#### `bin/production`
+Este script executa o projeto no modo de produção, sem hot reload de páginas e sem reinicialização do nodemon(na verdade sem usar o nodemon em si).
+Altamente recomendado para uma experiência mais performática.
+Todos os módulos aqui são carregados pensando na maior performance possível.
+Há cache de arquivos e toda uma estrutura pensada para obter o máximo de desempenho aqui.
+Não recomendado para o desenvolvimento pois a cada alteração feita no código é preciso manualmente reinicializar o servidor e retranspilar todos os módulos o que gasta muito tempo.
+
+#### `bin/test`
+Este script simplesmente executa a switch de testes do projeto, rodando todos os testes unitários desenvolvidos.
