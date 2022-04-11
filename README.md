@@ -7,6 +7,7 @@ Teste de admissão para a empresa Inicie Educação
 * [Direto ao teste :hamburger:](#direto-ao-teste-hamburger)
 * [Variáveis de ambiente](#variáveis-de-ambiente)
 * [Scripts automatizados](#scripts-automatizados)
+* [Estrutura do projeto](#estrutura-do-projeto)
 
 ## Do que se trata?
 Um projeto feito para um teste de admissão de uma vaga de Programador Pleno Backend NodeJS.
@@ -150,3 +151,104 @@ Não recomendado para o desenvolvimento pois a cada alteração feita no código
 
 #### `bin/test`
 Este script simplesmente executa a switch de testes do projeto, rodando todos os testes unitários desenvolvidos.
+
+
+## Estrutura do projeto
+O projeto conta com uma estrutura arrojada. Frontend e backend.
+Além disso, também contém padrões de projeto bem estruturados.
+Foi baseado em controllers, com rotas separadas dentro da pasta do controller.
+Há uma arquitetura de Docker baseada em ambientes e usa o conceito de um roteiro para desenvolver a lógica do teste.
+
+### Docker
+O projeto conta com 3 arquivos docker.
+Cada um para um ambiente específico.
+
+O arquivo `docker-compose.yml` é o principal arquivo docker.
+Este contém toda a estrutura de produção, otimizada para o máximo de desempenho.
+
+O arquivo `docker-compose.dev.yml` contém a versão do projeto para desenvolvimento.
+Seu foco é facilitar a vida do desenvolvedor com tecnologias como hot reload e watch files.
+Para recarregar a página ao atualizar o código e reiniciar o servidorem caso de alteração no backend, respectivamente.
+
+O arquivo `docker-compose.test.yml` nada mais é do que o script de testes automatizado rodando no ambiente docker.
+Foi feito para reaproveitar e usar o mesmo ambiente dos container docker para realizar os testes ao invés do computador do desenvolvedor especificamente.
+
+### Build
+O projeto foi feito inteiramente em Typescript.
+Porém sabemos que o uso do mesmo em ambiente de produção pode ser desvantajoso vista a necessidade constante de checagem de tipos.
+O Typescript foi feito para atuar ajudando o desenvolvedor a reduzir possíveis bugs de tipagem.
+Porém em produção só tornaria o projeto mais pesado para o servidor.
+
+Tendo em vista isso, fiz uma estrutura de build do projeto que transforma o código feito em uma versão mais leve e otimizada usando commonjs.
+
+A pasta destino do build é justamente a pasta por nome `build`.
+Adicionada no arquivo `.gitignore` para não ser lida pelo repositório Git.
+
+Nela irão ficar os arquivos transpilados para o padrão EcmaScript 5.
+
+### Pages
+Como o teste é especificamente para uma vaga backend, tomei a liberdade de usar um framework do meu gosto pessoal para o frontend.
+O framework NextJS.
+
+Eu poderia ter utilizado somente ele para fazer o Frontend e o Backend.
+Mas meu objetivo com este teste era demonstrar o máximo do meu conhecimento com o máximo de tecnologias possíveis.
+Por isso utilizei o Express para o Backend.
+Porém o Frontend é todo feito utilizando o NextJS.
+
+O framework usa a pasta `pages` como padrão para usar como diretório raíz das páginas web.
+A árvore de diretórios desta página já é a mesma árvore de diretórios refletida na aplicação.
+Similar a como se trabalhava com PHP antigamente.
+
+### EnvNames
+O arquivo `src/config/envNames.ts` guarda todas as variáveis de ambiente do projeto.
+Assim, seguindo os princípios de DRY(Don't Repeat Yourself) e Clean Code(Código Limpo), este arquivo centraliza todas as variáveis de ambiente em si, de uma maneira tão intuitiva que até dispensa o uso de um arquivo `.env.example`.
+
+Assim, este arquivo serve tanto para facilitar o desenvolvimento como também como uma forma de documentação direta no código.
+
+### App
+Seguindo outro princípio, desta vez o da modularização de projetos, separei o arquivo inicial do servidor `src/index.ts` do arquivo que define configurações da aplicação, o `src/app.ts`.
+
+Este arquivo usa o design pattern de factory para gerar uma aplicação Express junta ao NextJS para ser usada em um servidor da biblioteca nativa do NodeJS, a biblioteca `http`.
+
+### Controllers
+A aplicação segue o padrão de controllers.
+Utilizando classes com atributos estáticos como controllers(Existem N maneiras de fazer isto. Esta é apenas uma delas), montei controllers para intermediar as requisições para a API GoRest e o frontend da aplicação.
+
+Este conceito de Backend como intermediário entre um ou vários backends para um frontend é conhecido como BFF(Backend For Frontend).
+
+Todos os controllers estão centralizados na pasta `src/controllers`.
+
+### Routes
+Para separar os controllers da lógica de rotas(Novamente, Don't Repeat Yourself), separei o controller em duas partes:
+* Index
+* Routes
+
+As routes servem como usuários dos controllers para fornecer seus serviços através de rotas HTTP.
+Todas as rotas usam Router's do Express para serem formadas, e são usadas pelo rootRouter para serem servidas como subrotas da rota principal `/api`.
+
+### Roadmap
+Indo para o fluxo de dados do Frontend agora, existe uma pasta que guarda o "roteiro" da aplicação.
+
+A pasta `src/roadmap`
+
+Fiz a aplicação inteira nesse formato de roteiro, como uma apresentação PowerPoint sequenciada.
+
+Para isso pensei em utilizar uma estrutura de dados como uma fila.
+Porém achei demasiado desnecessário e resolvi fazer neste formato que nomeei como Roadmap.
+
+Talvez alguém já tenha dado outro nome para este formato, mas eu o chamo especificamente assim.
+
+O arquivo index da página nada mais é do que uma factory para a roadmap.
+
+Há uma subpasta chamada `actions`.
+
+Ela conta com um arquivo index que organiza os "steps" e fornece toda uma estrutura para ser consumida em um provider chamado RoadmapProvider,
+presente no arquivo `src/providers/roadmap.tsx`.
+
+### Tests
+O projeto conta com uma pasta exclusiva para testes unitários.
+A pasta `src/__tests__/unit`.
+
+Ela pasta guarda os arquivos de testes unitários do projeto na mesma estrutura de diretórios da aplicação.
+
+Todos os testes são modularizados, utilzando mocks para simular a resposta de outros módulos ou serviços.
