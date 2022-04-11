@@ -36,9 +36,25 @@ As principais são
 * Express 4.17.3
 * React 17.0.2
 
-## Como instalar?
-Primeiramente é necessário ter instalado o Docker e o Docker-compose na versão mais recente disponível para sua máquina.
-Há instruções de como instalar em seu sistema operacional em [docker.com/get-docker](https://www.docker.com/get-docker).
+## Direto ao teste :hamburger:
+Para ver o projeto em ação de maneira rápida siga estes passos:
+#### Baixe o repositório do projeto na sua máquina
+```
+git clone https://github.com/OzRib/teste-inicie-educacao.git
+```
+#### Configure as variáveis de abiente
+Clique [aqui](#variáveis-de-ambiente) para ver como definir as variáveis de ambiente.
+
+#### Instale o Docker
+[docker.com/get-docker](https://www.docker.com/get-docker)
+
+#### Entre na pasta do projeto e execute o script de production(Sistemas Linux)
+```
+bin/production
+```
+Obs: Para máquinas com um sistema operacional não baseado em Linux, rode o comando `docker-compose up`
+
+#### Abra seu navegador no endereço `http://localhost`
 
 É recomendável a instalação do Yarn e do NodeJS para desenvolvimento. Porém se deseja apenas testar, estas instalações são desnecessárias.
 * [Instalação Yarn](https://yarnpkg.com/getting-started/install)
@@ -85,18 +101,7 @@ Ela se chama `script` e define em que script o projeto está rodando para defini
 
 Todas as variáveis de ambiente são centralizadas no arquivo `src/config/envNames.ts`.
 
-## Como executar o projeto?
-Simples, execute o script `bin/dev` ou o script `bin/production`.
-O script cuida de realizar todo o processo para você.
-
-Caso os scripts não sejam suportados pelo seu sistema operacional, basta executar o docker-compose indicando o arquivo de docker-compose do ambiente desejado.
-
-Exemplo:
-```
-docker-compose -f docker-compose.production.yml up
-```
-
-## Scripts automaizados
+## Scripts automatizados
 Eu elaborei scripts para facilitar o uso e desenvolvimento da estrutura do projeto.
 Estes scripts são acessíveis na pasta `bin`.
 Trata-se de um conjunto de shell scripts.
