@@ -45,6 +45,12 @@ As principais são
 * Express 4.17.3
 * React 17.0.2
 
+## Demonstração
+Segue um vídeo de demonstração do projeto:
+
+https://user-images.githubusercontent.com/73843439/163044825-f220bf49-7fb8-4df8-a63d-1693b2b906ba.mp4
+
+
 ## Direto ao teste :hamburger:
 Para ver o projeto em ação de maneira rápida siga estes passos:
 #### Baixe o repositório do projeto na sua máquina
