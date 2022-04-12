@@ -8,11 +8,12 @@ Teste de admissão para a empresa Inicie Educação
 * [Variáveis de ambiente](#variáveis-de-ambiente)
 * [Scripts automatizados](#scripts-automatizados)
 * [Estrutura do projeto](#estrutura-do-projeto)
+* [Rotas](#rotas)
 
 ## Do que se trata?
 Um projeto feito para um teste de admissão de uma vaga de Programador Pleno Backend NodeJS.
 O projeto em si é completo. FrontEnd e BackEnd.
-Conta com um BFF(BackEnd For FrontEnd) da API GoRest, uma API falsa, com dados falsos para testes e demonstrações.
+Conta com um BFF(BackEnd For FrontEnd) da API [GoRest](https://gorest.co.in), uma API falsa, com dados falsos para testes e demonstrações.
 O objetivo é atender a todos os requisitos passados no teste:
  * Realizar um consumo completo de uma API REST utilizando a linguagem NodeJS
  * A execução deve ocorrer em ordem
@@ -80,7 +81,7 @@ Segue a relação dos ambientes e arquivos `.env`
 * Produção: `.env.production`
 * Desenvolvimento `.env`
 
-É preciso fazer o login e criar um novo token no serviço da GoRest.
+É preciso fazer o login e criar um novo token no serviço da [GoRest](https://gorest.co.in).
 Uma Fake API para demonstração em testes como esse.
 
 Após feito o login e gerado o token, defina-o nas variáveis de ambiente do ambiente que deseja utilizar da seguinte forma:
@@ -212,7 +213,7 @@ Este arquivo usa o design pattern de factory para gerar uma aplicação Express 
 
 ### Controllers
 A aplicação segue o padrão de controllers.
-Utilizando classes com atributos estáticos como controllers(Existem N maneiras de fazer isto. Esta é apenas uma delas), montei controllers para intermediar as requisições para a API GoRest e o frontend da aplicação.
+Utilizando classes com atributos estáticos como controllers(Existem N maneiras de fazer isto. Esta é apenas uma delas), montei controllers para intermediar as requisições para a API [GoRest](https://gorest.co.in) e o frontend da aplicação.
 
 Este conceito de Backend como intermediário entre um ou vários backends para um frontend é conhecido como BFF(Backend For Frontend).
 
@@ -252,3 +253,217 @@ A pasta `src/__tests__/unit`.
 Ela pasta guarda os arquivos de testes unitários do projeto na mesma estrutura de diretórios da aplicação.
 
 Todos os testes são modularizados, utilzando mocks para simular a resposta de outros módulos ou serviços.
+
+## Rotas
+O projeto além de fazer todo o fluxo de dados requeridos no teste, oferece também uma API enquanto funciona!
+
+### UserRoutes
+Vamos para a primeira categoria de rotas.
+As rotas de usuário ou UserRoutes.
+Elas são responsáveis por gerenciar os usuários no projeto.
+Todas as rotas descritas aqui são subrotas da rota `/api/users`.
+
+#### `GET /`
+Esta rota devolve todos os usuários da API em um um objeto JSON no formato de um array.
+
+Exemplo:
+```json
+[
+  {
+    "id": 1,
+    "name": "Chanakya Enbranthiri",
+    "email": "embrantiry_chanakya@nitzche-leannon.com",
+    "gender": "male",
+    "status": "active"
+  }
+]
+```
+
+Há também alguns argumentos de URL opcionais.
+Segue a lista:
+Argumento | Valor | Exemplo | Função
+-----|-----|-----|-----
+email | E-mail | foo@bar.com | Filtrar os usuários pelo e-mail indicado nesse parâmetro.
+
+#### `POST /`
+Esta rota serve para enviar para a API da GoRest uma nova requisição para um novo usuário utilizando a nossa API como intermediária.
+
+É necessário mandar um objeto JSON como `Content-Type`.
+
+Portanto o Cabeçalho HTTP de uma requisição para esta rota ficaria parecido com isto:
+```
+POST http://localhost/api/users
+Content-Type: application/json
+```
+
+O corpo da requisição deve ser um objeto JSON com os seguintes atributos:
+Atributo | Valor | Tipo | Exemplo
+-----|-----|-----|-----
+name | Nome | String | Anurag Gupta
+email | E-mail | email | gupta_anurag@treutel-khshlerin.ru
+gender | Gênero | "male" ou "female" | male
+status | Status | "active" ou "inactive" | active
+
+Exemplo:
+```
+{
+  "name": "Anurag Gupta",
+  "email": "gupta_anurag@treutel-khshlerin.ru",
+  "gender": "male",
+  "status": "active"
+}
+```
+
+#### `GET /:userId`
+Esta rota é um pouco diferente.
+Ela usa um parâmetro de URL.
+
+Neste caso ela poderia ser acessada da seguinte forma:
+`http://localhost/users/255`
+
+Somente números podem ser passados nesse parâmetro de URL.
+Caso um valor não numérico seja passado, ocorrerá um erro.
+
+Ela retorna um usuário no formato JSON caso ache o usuário.
+
+Exemplo:
+```json
+{
+  "name": "Chatur Iyengar VM",
+  "email": "chatur_vm_iyengar@douglas.io",
+  "gender": "female",
+  "status": "inactive"
+}
+```
+
+#### `DELETE /:userId`
+Esta rota deleta um usuário existente.
+Basta indicar o id do usuário na URL.
+
+### PostRoutes
+As rotas de post, ou PostRoutes são responsáveis pela manipulação dos posts usados no projeto.
+Todas as rotas aqui descritas são subrotas de `/api/posts`.
+
+#### `GET /`
+Esta rota retorna um objeto JSON no formato array com todos os post da API GoRest.
+
+Exemplo:
+```json
+[
+  {
+    "id": 65535,
+    "user_id": 32767,
+    "title": "My first post",
+    "body": "Be happy! The life is beautiful!"
+  }
+]
+```
+
+#### `POST /`
+Esta rota cria um novo post com base em alguns dados fornecidos no corpo da requisição como um objeto JSON.
+
+O cabeçalho da requisição é similar a este:
+```
+POST http://localhost/api/posts
+Content-Type: application/json
+```
+
+O corpo da requisição deve ser um objeto JSON com os seguintes atributos:
+Atributo | Valor | Tipo | Exemplo
+-----|-----|-----
+user_id | Id de usuário | Integer | 127
+title | Título do post | String | Foo
+body | Corpo do post | String | Bar
+
+Exemplo:
+```json
+{
+  "user_id": 127,
+  "title": "Foo",
+  "body": "Bar"
+}
+```
+
+#### `GET /:postId`
+Esta rota retorna um post já existente no formato JSON.
+
+Exemplo:
+```
+{
+  "id": 1409,
+  "user_id": 2908,
+  "title": "bsque et ut viduo vinco cur carmen quisquam tardus vomer",
+  "body": "Non torqueo cunctatio. Vapulus dolores capto."
+}
+```
+
+### CommentRoutes
+As rotas de comentários são responsáveis pela manipulação dos comentários na aplicação.
+Todas as rotas descritas a seguir são subrotas de `/api/comments`.
+
+#### `GET /`
+Esta rota retorna todos os comentários da API da GoRest no formato de um array em um objeto JSON.
+
+Exemplo:
+```json
+[
+  {
+    "id":1397,
+    "post_id":1410,
+    "name":"Bhaaswar Joshi",
+    "email":"bhaaswar_joshi@muller.com",
+    "body":"Alias recusandae aut. Consequuntur vel eum. Cupiditate iusto et. Quae itaque reiciendis."
+   }
+]
+```
+
+Existem alguns parâmetros de URL opcionais nesta rota.
+Segue a lista:
+Parâmetro | Valor | exemplo | Função
+-----|-----|-----|-----
+postId | Id do post | 4095 | Filtrar comentários por post
+
+#### `GET /:commentId`
+Esta rota retorna um comentário em específico no formato JSON.
+
+Exemplo:
+```json
+{
+  "id":1396,
+  "post_id":1410,
+  "name":"Amb. Surya Mehra",
+  "email":"surya_amb_mehra@wolff-bednar.net",
+  "body":"Est ex est. Mollitia a voluptates."
+ }
+```
+
+#### `POST /`
+Essa rota cria um novo comentário com base nos dados forneciodos no corpo de uma requisição no formato JSON.
+
+O cabeçalho da requisição é similar a este:
+```
+POST http://localhost/api/comments
+Content-Type: application/json
+```
+
+O corpo da requisição deve ser um objeto JSON com os seguintes atributos:
+Atributo | Valor | Tipo | Exemplo
+-----|-----|-----
+post_id | Id do post | Integer | 2047
+name | Nome do usuário | String | Foo Bar
+email | E-mail do usuário | String | foo@bar.com
+body | Corpo do comentário | String | foo bar foo
+
+Exemplo:
+```json
+{
+  "post_id": 2047,
+  "name": "Foo Bar",
+  "email": "foo@bar.com",
+  "body": "foo bar foo"
+}
+```
+
+#### `DELETE /:userId`
+Esta rota deleta um comentário existente.
+Basta indicar o id do comentário na URL.
